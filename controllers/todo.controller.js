@@ -1,9 +1,9 @@
 import Todo from "../models/todo.model.js";
 import mongoose from "mongoose";
+import { asyncHandler } from "../middlewares/asyncHandler.js";
 
 //Create TODO- POST API
-export const createTodo = async (req, res) => {
-    try {
+export const createTodo = asyncHandler(async (req, res) => {
         const { title, description } = req.body;
 
         //validation
@@ -24,18 +24,10 @@ export const createTodo = async (req, res) => {
             message: "Todo created successfully",
             todo,
         });
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Internal Server Error",
-            error: error.message,
-        })
-    }
-};
+});
 
 //Get all TODO- GET API
-export const getTodos = async (req, res) => {
-    try{
+export const getTodos = asyncHandler(async (req, res) => {
         //Query Param
         const {search, sort, page=1, limit=10} = req.query;
 
@@ -70,18 +62,10 @@ export const getTodos = async (req, res) => {
             limit: Number(limit),
             data : todos,
         });
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Internal Server Error",
-            error: error.message,
-        })
-    }
-};
+});
 
 //Get TODO by ID- GET API
-export const getTodoById = async (req, res) => {
-    try{
+export const getTodoById = asyncHandler(async (req, res) => {
         const { id } = req.params;
 
         //Validate ID based on mongoose
@@ -108,18 +92,10 @@ export const getTodoById = async (req, res) => {
             message: "Todo fetched successfully",
             data: todo,
         });
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Internal Server Error",
-            error: error.message,
-        })
-    }
-};
+});
 
 //Update TODO by ID- PUT API
-export const updateTodo = async (req, res) => {
-    try{
+export const updateTodo = asyncHandler(async (req, res) => {
         const { id } = req.params;
         const { title, description } = req.body;
 
@@ -160,18 +136,10 @@ export const updateTodo = async (req, res) => {
             message: "Todo updated successfully",
             data: todo,
         });
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Internal Server Error",
-            error: error.message,
-        })
-    }
-};
+});
 
 //TOGGLE TODO by ID- PATCH API
-export const toggleTodo = async (req, res) => {
-    try{
+export const toggleTodo = asyncHandler(async (req, res) => {
         const { id } = req.params;
 
         //Validate ID based on mongoose
@@ -204,19 +172,10 @@ export const toggleTodo = async (req, res) => {
             message: "Todo toggled successfully",
             data: todo,
         });
-
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Internal Server Error",
-            error: error.message,
-        })
-    }
-};
+});
 
 //Delete TODO by ID- DELETE API
-export const deleteTodo = async (req, res) => {
-    try{
+export const deleteTodo = asyncHandler(async (req, res) => {
         const { id } = req.params;
 
         //Validate ID based on mongoose
@@ -244,12 +203,4 @@ export const deleteTodo = async (req, res) => {
             message: "Todo deleted successfully",
             data: todo,
         });
-
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Internal Server Error",
-            error: error.message,
-        })
-    }
-};
+});

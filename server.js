@@ -3,6 +3,7 @@ import cors from 'cors';
 import todoRoutes from './routes/todo.routes.js';
 import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
+import { errorHandler } from './middlewares/error.middleware.js';
 
 dotenv.config();
 
@@ -17,6 +18,9 @@ connectDB();
 
 // Routes
 app.use('/api/todos', todoRoutes);
+
+// Error Handling Middleware
+app.use(errorHandler);
 
 // Start server
 const PORT = process.env.PORT || 3000;
