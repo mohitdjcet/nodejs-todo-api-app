@@ -16,7 +16,7 @@ app.use(express.json());
 connectDB();
 
 // Routes
-app.use('/api', todoRoutes);
+app.use('/api/todos', todoRoutes);
 
 // Start server
 const PORT = process.env.PORT || 3000;
